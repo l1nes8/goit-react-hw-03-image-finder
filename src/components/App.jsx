@@ -18,6 +18,7 @@ export class App extends Component {
     error: null,
     showModal: false,
     modalImageURL: '',
+    totalHits: 0,
   };
 
   fetchImages = () => {
@@ -33,6 +34,7 @@ export class App extends Component {
         this.setState(prevState => ({
           images: [...prevState.images, ...response.data.hits],
           page: prevState.page + 1,
+          totalHits: response.data.totalHits,
         }));
       })
       .catch(error => {
@@ -61,7 +63,10 @@ export class App extends Component {
   };
 
   render() {
-    const { images, isLoading, error, showModal, modalImageURL } = this.state;
+    const { images, isLoading, error, showModal, modalImageURL, totalHits } =
+      this.state;
+
+    const shouldRenderLoadMoreButton = images.length < totalHits;
 
     return (
       <div className={css.App}>
@@ -85,7 +90,9 @@ export class App extends Component {
             visible={true}
           />
         )}
-        {images.length >= 12 && <Button onClick={this.handleLoadMoreClick} />}
+        {shouldRenderLoadMoreButton && (
+          <Button onClick={this.handleLoadMoreClick} />
+        )}
         {showModal && (
           <Modal
             largeImageURL={modalImageURL}

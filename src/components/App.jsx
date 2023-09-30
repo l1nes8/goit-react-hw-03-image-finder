@@ -13,6 +13,7 @@ export class App extends Component {
     images: [],
     query: '',
     page: 1,
+    perPage: 12,
     isLoading: false,
     error: null,
     showModal: false,
@@ -20,9 +21,9 @@ export class App extends Component {
   };
 
   fetchImages = () => {
-    const { query, page } = this.state;
+    const { query, page, perPage } = this.state;
     const apiKey = '38965444-221e39e59f698a8ee4d2c4c8b';
-    const url = `https://pixabay.com/api/?q=${query}&page=${page}&key=${apiKey}&image_type=photo&orientation=horizontal&per_page=12`;
+    const url = `https://pixabay.com/api/?q=${query}&page=${page}&key=${apiKey}&image_type=photo&orientation=horizontal&per_page=${perPage}`;
 
     this.setState({ isLoading: true });
 
@@ -84,9 +85,7 @@ export class App extends Component {
             visible={true}
           />
         )}
-        {images.length > 0 && (
-          <Button onClick={this.handleLoadMoreClick} isVisible={true} />
-        )}
+        {images.length > 0 && <Button onClick={this.handleLoadMoreClick} />}
         {showModal && (
           <Modal
             largeImageURL={modalImageURL}

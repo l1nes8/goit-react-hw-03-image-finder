@@ -85,7 +85,7 @@ export class App extends Component {
             visible={true}
           />
         )}
-        {images.length > 0 && <Button onClick={this.handleLoadMoreClick} />}
+        {images.length >= 12 && <Button onClick={this.handleLoadMoreClick} />}
         {showModal && (
           <Modal
             largeImageURL={modalImageURL}

@@ -6,6 +6,7 @@ import { ImageGallery } from './ImageGallery.js';
 import { ImageGalleryItem } from './ImageGalleryItem.js';
 import { Button } from './Button.js';
 import { Modal } from './Modal.js';
+import css from '../styles.module.css';
 
 export class App extends Component {
   state = {
@@ -33,7 +34,10 @@ export class App extends Component {
           page: prevState.page + 1,
         }));
       })
-      .catch(error => this.setState({ error: error.message }))
+      .catch(error => {
+        console.error('Error fetching images:', error);
+        this.setState({ error: 'Error fetching images' });
+      })
       .finally(() => {
         this.setState({ isLoading: false });
       });
@@ -59,8 +63,8 @@ export class App extends Component {
     const { images, isLoading, error, showModal, modalImageURL } = this.state;
 
     return (
-      <div>
-        <Searchbar onSubmit={this.handleSearchSubmit} />;
+      <div className={css.App}>
+        <Searchbar onSubmit={this.handleSearchSubmit} />
         <ImageGallery>
           {images.map(image => (
             <ImageGalleryItem
@@ -80,16 +84,16 @@ export class App extends Component {
             visible={true}
           />
         )}
-        {images.length > 0 && !isLoading && (
+        {images.length > 0 && (
           <Button onClick={this.handleLoadMoreClick} isVisible={true} />
         )}
-        {error && <p className="error">{error}</p>}
         {showModal && (
           <Modal
             largeImageURL={modalImageURL}
             onClose={this.handleCloseModal}
           />
         )}
+        {error && <p className="error">{error}</p>}
       </div>
     );
   }

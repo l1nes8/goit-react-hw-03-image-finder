@@ -66,7 +66,7 @@ export class App extends Component {
     const { images, isLoading, error, showModal, modalImageURL, totalHits } =
       this.state;
 
-    const shouldRenderLoadMoreButton = images.length <= totalHits;
+    const shouldRenderLoadMoreButton = images.length < totalHits;
 
     return (
       <div className={css.App}>

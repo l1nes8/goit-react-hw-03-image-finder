@@ -205,3 +205,10 @@ img {
 .Button:focus {
   background-color: #303f9f;
 }
+
+.error {
+  padding: 24px 0;
+  font-family: 32px;
+  color: white;
+  background-color: red;
+}
